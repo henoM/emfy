@@ -5,18 +5,18 @@ class EventDeduplicator {
     private $file;
     private $events;
     
-    public function __construct($file) {
+    public function __construct(string $file) {
         $this->file = $file;
         $this->events = file_exists($file) ? json_decode(file_get_contents($file), true) ?: [] : [];
     }
 
-    public function getEventKey($eventInfo) {
+    public function getEventKey(array $eventInfo): string {
         $type = $eventInfo['eventType'] ?? '';
         $id = $eventInfo['entityId'] ?? '';
         return md5($type . '_' . $id);
     }
 
-    public function isDuplicate($eventKey, $eventInfo) {
+    public function isDuplicate(string $eventKey, array $eventInfo): bool {
         $now = time();
         $hash = md5(json_encode($eventInfo));
         if (isset($this->events[$eventKey]) &&
@@ -27,7 +27,7 @@ class EventDeduplicator {
         return false;
     }
 
-    public function markProcessed($eventKey, $eventInfo) {
+    public function markProcessed(string $eventKey, array $eventInfo): void {
         $this->events[$eventKey] = [
             'time' => time(),
             'hash' => md5(json_encode($eventInfo))

@@ -5,10 +5,10 @@ use GuzzleHttp\Client;
 
 class NoteCreator {
     private $env;
-    public function __construct($env) {
+    public function __construct(array $env) {
         $this->env = $env;
     }
-    public function createNote($eventInfo, $accessToken) {
+    public function createNote(array $eventInfo, string $accessToken): bool {
         $entityType = $eventInfo['entityType'];
         $entityId = $eventInfo['entityId'];
         $noteText = $eventInfo['eventType'] . ' - Name: ' . $eventInfo['name'] . ', Responsible: ' . $eventInfo['responsiblePerson'] . ', Time: ' . $eventInfo['time'];

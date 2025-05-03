@@ -4,7 +4,7 @@ namespace App;
 
 class EventType
 {
-    public function detect($payload)
+    public function detect(array $payload): ?array
     {
         $map = [
             ['leads', 'update', 'Deal updated'],

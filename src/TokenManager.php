@@ -8,13 +8,13 @@ class TokenManager {
     private $file;
     private $tokens;
     
-    public function __construct($env) {
+    public function __construct(array $env) {
         $this->env = $env;
         $this->file = __DIR__ . '/../tokens.json';
         $this->tokens = file_exists($this->file) ? json_decode(file_get_contents($this->file), true) : null;
     }
 
-    public function getValidTokens() {
+    public function getValidTokens(): array {
         if (!$this->tokens) {
             throw new \Exception('No tokens available');
         }
